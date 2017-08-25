@@ -12,6 +12,7 @@ RUN addgroup soulseek
 RUN useradd -m -s /bin/bash -g soulseek soulseek
 RUN echo "soulseek:soulseek" | /usr/sbin/chpasswd
 RUN echo "soulseek    ALL=(ALL) ALL" >> /etc/sudoers
+RUN chown root:root /usr/bin/sudo && chmod 4755 /usr/bin/sudo
 WORKDIR /home/soulseek
 ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 ADD menu.xml /etc/xdg/openbox/menu.xml
@@ -20,7 +21,7 @@ RUN chown soulseek:soulseek /usr/bin/soulseek*
 ADD winetricks /home/soulseek/winetricks
 RUN chown soulseek:soulseek /home/soulseek
 ENV WINEPREFIX /home/soulseek/.wine
-ENV WINEARCH win32
+ENV WINEARCH win64
 ENV DISPLAY :1
 ADD start /bin/start
 USER soulseek
